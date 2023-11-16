@@ -1,3 +1,19 @@
+import { createMenuObject } from '../helpers/createMenuObjects.js';
+import { Pet } from '../models/pets.js';
+
 export const search = (req, res) => {
-  //res.render('pages/search');
+  let query = req.query.q;
+
+  if (!query) {
+    res.redirect('/');
+    return;
+  }
+
+  let list = Pet.getFromName(query);
+
+  res.render('pages/page', {
+    menu: createMenuObject(''),
+    list: list,
+    query,
+  });
 };
